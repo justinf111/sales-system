@@ -7,9 +7,10 @@
         <title>Laravel</title>
 
     </head>
-    <body>
-        <div id="app">
-            <navbar></navbar>
+    <body class="bg-gray-100">
+        <div id="app" >
+            <navbar class="mb-10"></navbar>
+
             <div class="container mx-auto">
                 @yield('content')
             </div>

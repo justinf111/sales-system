@@ -6,12 +6,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class Sale extends Model
 {
+    protected $dates = [
+        'date',
+    ];
     public function customer() {
         return $this->belongsTo(Customer::class);
     }
 
-    public function product() {
-        return $this->belongsTo(Product::class);
+    public function products() {
+        return $this->belongsToMany(Product::class);
     }
 
     public function employee() {
@@ -19,6 +22,6 @@ class Sale extends Model
     }
 
     public function getTotalAttribute() {
-        return $this->product->price;
+        return $this->products()->pluck('price')->sum();
     }
 }

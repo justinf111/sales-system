@@ -5,20 +5,23 @@ use App\Models\Sale;
 use App\Models\Product;
 use App\Models\Customer;
 use App\Models\Employee;
-use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithStartRow;
 use PhpOffice\PhpSpreadsheet\Shared\Date;
+use Maatwebsite\Excel\Concerns\OnEachRow;
+use Maatwebsite\Excel\Row;
 
-class SalesImport implements ToModel, WithStartRow
+class SalesImport implements OnEachRow, WithStartRow
 {
-    public function model(array $row)
+    public function onRow(Row $row)
     {
-        return Sale::create([
+        $row      = $row->toArray();
+        $sale = Sale::create([
             'date' => Date::excelToDateTimeObject($row[2]),
-            'product_id' => Product::where('name', $row[1])->first()->id,
             'customer_id' => Customer::where('full_name', $row[4])->first()->id,
             'employee_id' => Employee::where('name', $row[3])->first()->id,
         ]);
+
+        $sale->products()->attach(Product::where('name', $row[1])->first()->id);
     }
 
     public function startRow(): int

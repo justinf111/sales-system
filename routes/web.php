@@ -14,8 +14,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('dashboard');
 });
 
-Route::get('/dashboard', 'DashboardController')->name('dashboard');
-Route::get('/sales', 'SalesController@index')->name('sales');
+Route::any('/dashboard', 'DashboardController')->name('dashboard');
+Route::any('/sales', 'SalesController@index')->name('sales');

@@ -16,16 +16,16 @@ class DashboardController extends Controller
         else {
             $dailySales = Sale::where('date', '>', request('start_date'))->where('date', '<', request('end_date'));
         }
-        $dailySales = $dailySales->with('product')->get()->sortBy('date')->groupBy('date')->map(function($date) {
+        $dailySales = $dailySales->with('products')->get()->sortBy('date')->groupBy(function($sale) {
+            return $sale->date->format('Y-m-d');
+        })->map(function($date) {
             return $date->sum(function($sale) {
-                return $sale->product->price;
+                return $sale->total;
             });
         });
 
         $chartData = (Object)[
-          'labels' => $dailySales->keys()->map(function($date) {
-              return Carbon::createFromFormat('Y-m-d H:i:s', $date)->format('d-m-Y');
-          })->toArray(),
+          'labels' => $dailySales->keys()->toArray(),
           'datasets' => [
               (Object)[
                   'label' => 'Daily Sales',
