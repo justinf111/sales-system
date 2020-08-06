@@ -18,3 +18,4 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', 'DashboardController')->name('dashboard');
+Route::get('/sales', 'SalesController@index')->name('sales');

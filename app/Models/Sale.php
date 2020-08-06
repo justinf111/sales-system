@@ -11,10 +11,14 @@ class Sale extends Model
     }
 
     public function product() {
-        return $this->belongsTo(Project::class);
+        return $this->belongsTo(Product::class);
     }
 
     public function employee() {
         return $this->belongsTo(Employee::class);
+    }
+
+    public function getTotalAttribute() {
+        return $this->product->price;
     }
 }
