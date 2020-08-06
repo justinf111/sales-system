@@ -11,13 +11,13 @@
                             <label class="flex-shrink-0 block uppercase tracking-wide text-gray-700 text-xs font-bold mr-2" for="grid-first-name">
                                 Start Date
                             </label>
-                            <input name="start_date" value="{{ request('start_date') }}" class="rounded-md border-gray-100 border shadow-sm w-full py-2 px-4 focus:outline-none " type="text">
+                            <input name="start_date" value="{{ request('start_date') ?? now()->subMonth()->format('Y-m-d') }}" class="rounded-md border-gray-100 border shadow-sm w-full py-2 px-4 focus:outline-none " type="text">
                         </div>
                         <div class="flex items-center md:mr-6">
                             <label class="flex-shrink-0 block uppercase tracking-wide text-gray-700 text-xs font-bold mr-2" for="grid-first-name">
                                 End Date
                             </label>
-                            <input name="end_date" value="{{ request('end_date') }}" class="rounded-md border-gray-100 border shadow-sm w-full py-2 px-4 focus:outline-none" type="text">
+                            <input name="end_date" value="{{ request('end_date') ?? now()->format('Y-m-d') }}" class="rounded-md border-gray-100 border shadow-sm w-full py-2 px-4 focus:outline-none" type="text">
                         </div>
                         <input class="px-8 py-3 border border-transparent text-base leading-6 font-medium rounded-md text-white bg-blue-600 hover:bg-blue-500  transition duration-150 ease-in-out md:py-0 md:text-lg md:px-6 focus:outline-none" type="submit">
                     </div>

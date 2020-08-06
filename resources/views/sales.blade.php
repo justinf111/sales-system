@@ -14,7 +14,7 @@
                             <select name="customers" class="rounded-md border-gray-100 border shadow-sm w-full py-2 px-4 focus:outline-none">
                                 <option value="">Please select a customer</option>
                                 @foreach($customers as $customer)
-                                    <option value="{{$customer->id}}">{{$customer->full_name}}</option>
+                                    <option value="{{$customer->id}}" {{request('customers') == $customer->id ? 'selected' : ''}}>{{$customer->full_name}}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -25,7 +25,7 @@
                             <select name="employees" class="rounded-md border-gray-100 border shadow-sm w-full py-2 px-4 focus:outline-none">
                                 <option value="">Please select a employee</option>
                                 @foreach($employees as $employee)
-                                    <option value="{{$employee->id}}">{{$employee->name}}</option>
+                                    <option value="{{$employee->id}}" {{request('employees') == $employee->id ? 'selected' : ''}}>{{$employee->name}}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -50,12 +50,14 @@
                             Customer
                         </th>
                         <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                            Products
+                        </th>
+                        <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
                             Total
                         </th>
                         <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
                             Date
                         </th>
-                        <th class="px-6 w-10 py-3 border-b border-gray-200 bg-gray-50"></th>
                     </tr>
                     </thead>
                     <tbody class="bg-white divide-y divide-gray-200">
@@ -68,13 +70,13 @@
                                     {{$sale->customer->full_name}}
                                 </td>
                                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-sm leading-5 text-gray-900">
+                                    {{$sale->products->pluck('name')->implode(',')}}
+                                </td>
+                                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-sm leading-5 text-gray-900">
                                     ${{$sale->total}}
                                 </td>
                                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-sm leading-5 text-gray-900">
                                     {{$sale->date->format('d-m-Y')}}
-                                </td>
-                                <td class="px-6 py-4 whitespace-no-wrap text-right border-b border-gray-200 text-sm leading-5 font-medium">
-                                    <a href="#" class="text-indigo-600 hover:text-indigo-900">View Details</a>
                                 </td>
                             </tr>
                         @endforeach
